@@ -1,0 +1,65 @@
+html
+    head
+        title Budget Page
+        meta(name="viewport", content="width=device-width, initial-scale=1, shrink-to-fit=no")
+        link(href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css", rel='stylesheet')
+        link(href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css", rel='stylesheet')
+        link(href="assets/css/style.css", rel='stylesheet')
+        script(src="https://code.jquery.com/jquery-3.1.1.slim.min.js", integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n", crossorigin="anonymous")
+        script(src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js", integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb", crossorigin="anonymous")
+        script(src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js", integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn", crossorigin="anonymous")
+        script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js")
+        script(src="assets/js/common.js")
+    body
+        block header
+            nav.navbar.navbar-toggleable-md.navbar-light.bg-faded
+                a.navbar-brand(href='#') Personal Budget
+                .collapse.navbar-collapse
+                    ul.navbar-nav
+                        li.nav-item
+                            a.nav-link(href='#') <i class="fa fa-home" aria-hidden="true"></i> Главная
+                        li.nav-item
+                            a.nav-link(href='#') <i class="fa fa-plus" aria-hidden="true"></i> Добавить доход
+                        li.nav-item
+                            a.nav-link(href='#', data-toggle="modal", data-target="#exampleModal") <i class="fa fa-plus" aria-hidden="true"></i> Добавить расход
+        .main-wrapper
+            .row
+                block leftSidebar
+                    .col-md-2
+                block content
+
+                block rightSidebar
+                    .col-md-2
+        .pb-footer
+            .modal.fade#exampleModal(tabindex="-1", role="dialog", aria-labelledby="exampleModalLabel", aria-hidden="true")
+                .modal-dialog(role='document')
+                    .modal-content
+                        .modal-header
+                            h5.modal-title#exampleModalLabel Расход
+                            button.close(type='button', data-dismiss="modal", aria-label="Close")
+                                span(aria-hidden="true") &times;
+                        .modal-body
+                            form#pb-form-leave(method='POST', action='/')
+                                .form-group.row
+                                    label.col-4.col-form-label(for="pb-date") Дата
+                                    .col-8
+                                        input#pb-date.form-control(type="date", value="#{options.currenDate}")
+                                .form-group.row
+                                    label.col-4.col-form-label(for="pb-tag") Категория
+                                    .col-8
+                                        select#pb-tag.form-control
+                                            option Питание
+                                            option Развлечения
+                                            option Транспорт
+                                            option Другое
+                                .form-group.row
+                                    label.col-4.col-form-label(for="pb-desc") Описание
+                                    .col-8
+                                        input#pb-desc.form-control(type="text", value="")
+                                .form-group.row
+                                    label.col-4.col-form-label(for="pb-sum") Сумма (руб.)
+                                    .col-8
+                                        input#pb-sum.form-control(type="number", value="1000")
+
+                                button.btn.btn-secondary(type="button", data-dismiss="modal") Закрыть
+                                button#pb-send-leave.btn.btn-primary(type="submit") Добавить

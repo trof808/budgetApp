@@ -1,5 +1,29 @@
-html
-    head
-        title
-    body
-        
+extends parts/main.jade
+
+block content
+    .col-md-8
+        .main-content
+            ul.pb-buttons-main
+                li.pb-btn.pb-btn-profit Доходы
+                li.pb-btn.pb-btn-all.active Все
+                li.pb-btn.pb-btn-leave Расходы
+            .pb-tables
+                table.table.table-hover
+                    thead
+                        tr
+                            th <i class="fa fa-calendar-check-o" aria-hidden="true"></i> Дата
+                            th <i class="fa fa-tags" aria-hidden="true"></i> Категория
+                            th <i class="fa fa-pencil-square" aria-hidden="true"></i> Описание
+                            th <i class="fa fa-money" aria-hidden="true"></i> Расход/Доход
+                            th
+                            th
+                    tbody
+                        for item in options.data
+                            tr
+                                td #{item.date}
+                                td.pb-cat
+                                    div <i class="fa fa-tag" aria-hidden="true"></i> #{item.category}
+                                td #{item.description}
+                                td.pb-leave #{item.sum} руб.
+                                td.pb-btn-edit <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                td.pb-btn-close <i class="fa fa-times" aria-hidden="true"></i>

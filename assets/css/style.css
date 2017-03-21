@@ -1,0 +1,58 @@
+body {
+    font-family:Arial;
+}
+a {
+    outline: none;
+}
+.main-wrapper {
+    padding: 20px;
+}
+.main-content {
+    padding: 10px;
+    border-right: 1px solid #dddddd;
+    border-left: 1px solid #dddddd;
+}
+ul.pb-buttons-main {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    text-align: center;
+}
+li.pb-btn {
+    display: inline-block;
+    padding: 20px;
+    transition: color .5s;
+    cursor: pointer;
+}
+li.pb-btn:hover, li.pb-btn.active {
+    color: #aaa;
+    border-bottom: 2px solid #aaa;
+}
+td, th {
+    text-align: center;
+}
+
+td.pb-leave {
+    color: red;
+}
+td.pb-cat .fa {
+    font-size: 13px;
+}
+td.pb-cat div {
+    display: inline-block;
+    padding: 5px;
+    color: #fff;
+    background-color: #5294ff;
+    border-radius: 5px;
+}
+td.pb-btn-close {
+    opacity:0;
+    transition: .5s;
+    cursor: pointer;
+}
+td.pb-btn-edit {
+    cursor: pointer;
+}
+tr.active td.pb-btn-close {
+    opacity:1;
+}
