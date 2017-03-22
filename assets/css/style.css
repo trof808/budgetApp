@@ -36,7 +36,7 @@ td.pb-leave {
     color: red;
 }
 td.pb-profit {
-    color: green;
+    color: #0D3;
 }
 td.pb-cat .fa {
     font-size: 13px;
@@ -48,6 +48,7 @@ td.pb-cat div {
     background-color: #5294ff;
     border-radius: 5px;
     cursor: pointer;
+    font-size: 14px;
 }
 td.pb-btn-close {
     opacity:0;
