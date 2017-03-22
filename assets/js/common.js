@@ -28,6 +28,27 @@ $(document).ready(function() {
 
         var dataLeave = {type: typeLeave, date: dateLeave, category: categoryLeave, description: descriptionLeave, sum: sumLeave};
 
+        $.ajax({
+            type: 'POST',
+            url: '/',
+            data: dataLeave,
+            success: function(data) {
+                    location.reload();
+            }
+        });
+        return false;
+    });
+
+    $('#pb-form-profit').on('submit', function() {
+
+        var typeProfit = 'доход';
+        var dateProfit = $('#pb-date-profit').val();
+        var categoryProfit = $('#pb-tag-profit').val();
+        var descriptionProfit = $('#pb-desc-profit').val();
+        var sumProfit = $('#pb-sum-profit').val();
+
+        var dataLeave = {type: typeProfit, date: dateProfit, category: categoryProfit, description: descriptionProfit, sum: sumProfit};
+
         // console.log(sumLeave);
 
         $.ajax({
@@ -35,7 +56,7 @@ $(document).ready(function() {
             url: '/',
             data: dataLeave,
             success: function(data) {
-                    location.reload();
+                location.reload();
             }
         });
         return false;

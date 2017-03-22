@@ -3,10 +3,18 @@ extends parts/main.jade
 block content
     .col-md-8
         .main-content
-            ul.pb-buttons-main
-                li.pb-btn.pb-btn-profit Доходы
-                li.pb-btn.pb-btn-all.active Все
-                li.pb-btn.pb-btn-leave Расходы
+            .row
+                .col-md-4
+                .col-md-4
+                    ul.pb-buttons-main
+                        li.pb-btn.pb-btn-profit Доходы
+                        li.pb-btn.pb-btn-all.active Все
+                        li.pb-btn.pb-btn-leave Расходы
+                .col-md-4
+                    div.form-group.row
+                        //label.col-2.col-form-label(for="example-search-input") <i class="fa fa-search" aria-hidden="true"></i>
+                        div.col-md-12
+                            input#example-search-input.form-control(type="search", value="Питание")
             .pb-tables
                 table.table.table-hover
                     thead
@@ -23,7 +31,13 @@ block content
                                 td #{item.date}
                                 td.pb-cat
                                     div <i class="fa fa-tag" aria-hidden="true"></i> #{item.category}
-                                td #{item.description}
-                                td.pb-leave #{item.sum} руб.
+                                if item.description == ''
+                                    td -
+                                else
+                                    td #{item.description}
+                                if item.type == 'расход'
+                                    td.pb-leave - #{item.sum} руб.
+                                else
+                                    td.pb-profit + #{item.sum} руб.
                                 td.pb-btn-edit <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                 td.pb-btn-close <i class="fa fa-times" aria-hidden="true"></i>
