@@ -40,4 +40,4 @@ block content
                                 else
                                     td.pb-profit + #{item.sum} руб.
                                 td.pb-btn-edit <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                td.pb-btn-close <i class="fa fa-times" aria-hidden="true"></i>
+                                td.pb-btn-close(data-close="#{item._id}") <i class="fa fa-times" aria-hidden="true"></i>

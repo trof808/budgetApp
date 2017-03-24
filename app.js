@@ -1,6 +1,7 @@
 var express = require('express');
-var Controller = require('./controllers/controller')
+var Controller = require('./controllers/controller');
 var app = express();
+
 
 //set up template engine
 app.set('view engine', 'jade');

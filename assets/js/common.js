@@ -44,7 +44,7 @@ $(document).ready(function() {
             url: '/',
             data: dataLeave,
             success: function(data) {
-                    location.reload();
+                // location.reload();
             }
         });
         return false;
@@ -67,9 +67,21 @@ $(document).ready(function() {
             url: '/',
             data: dataLeave,
             success: function(data) {
-                location.reload();
+                // location.reload();
             }
         });
         return false;
+    });
+
+    $('.pb-btn-close').on('click', function() {
+        var itemId = $(this).data('close');
+
+        $.ajax({
+            type: 'DELETE',
+            url: '/'+itemId,
+            success: function(data) {
+                // location.reload();
+            }
+        });
     });
 });
