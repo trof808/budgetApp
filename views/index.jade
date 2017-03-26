@@ -39,5 +39,5 @@ block content
                                     td.pb-leave - #{item.sum} руб.
                                 else
                                     td.pb-profit + #{item.sum} руб.
-                                td.pb-btn-edit <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                td.pb-btn-edit(data-edit="#{item._id}", data-toggle="modal", data-target="#editItem") <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                 td.pb-btn-close(data-close="#{item._id}") <i class="fa fa-times" aria-hidden="true"></i>

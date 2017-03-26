@@ -13,7 +13,7 @@ html
     body
         block header
             nav.navbar.navbar-toggleable-md.navbar-light.bg-faded
-                a.navbar-brand(href='#') Personal Budget
+                a.navbar-brand(href='#') <i class="fa fa-line-chart" aria-hidden="true"></i> Personal Budget
                 .collapse.navbar-collapse
                     ul.navbar-nav
                         li.nav-item
@@ -63,7 +63,7 @@ html
                                 .modal-footer
                                     button.btn.btn-secondary(type="button", data-dismiss="modal") Закрыть
                                     button#pb-send-leave.btn.btn-primary(type="submit") Добавить
-            .modal.fade#profitModal(tabindex="-1", role="dialog", aria-labelledby="expenseModal", aria-hidden="true")
+            .modal.fade#profitModal(tabindex="-1", role="dialog", aria-labelledby="profitModal", aria-hidden="true")
                 .modal-dialog(role='document')
                     .modal-content
                         .modal-header
@@ -93,3 +93,35 @@ html
                                 .modal-footer
                                     button.btn.btn-secondary(type="button", data-dismiss="modal") Закрыть
                                     button#pb-send-profit.btn.btn-primary(type="submit") Добавить
+
+            .modal.fade#editItem(tabindex="-1", role="dialog", aria-labelledby="editItem", aria-hidden="true")
+                .modal-dialog(role='document')
+                    .modal-content
+                        .modal-header
+                            h5.modal-title#editItemLabel
+                            button.close(type='button', data-dismiss="modal", aria-label="Close")
+                                span(aria-hidden="true") &times;
+                        .modal-body
+                            form#pb-form-edit(method='PUT', action='/')
+                                .form-group.row
+                                    .col-8
+                                        input#pb-id-item.form-control.hidden(type="text", value="")
+                                .form-group.row
+                                    label.col-4.col-form-label(for="pb-date-item") Дата
+                                    .col-8
+                                        input#pb-date-item.form-control(type="date", value="#{options.currentDate}")
+                                .form-group.row
+                                    label.col-4.col-form-label(for="pb-tag-item") Категория
+                                    .col-8
+                                        select#pb-tag-item.form-control
+                                .form-group.row
+                                    label.col-4.col-form-label(for="pb-desc-item") Описание
+                                    .col-8
+                                        input#pb-desc-item.form-control(type="text", value="")
+                                .form-group.row
+                                    label.col-4.col-form-label(for="pb-sum-item") Сумма (руб.)
+                                    .col-8
+                                        input#pb-sum-item.form-control(type="number", value="1000")
+                                .modal-footer
+                                    button.btn.btn-secondary(type="button", data-dismiss="modal") Закрыть
+                                    button#pb-send-edit.btn.btn-primary(type="submit") Обновить

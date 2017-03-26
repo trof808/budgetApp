@@ -26,6 +26,14 @@ module.exports = function(app) {
         });
     });
 
+    app.get('/:editId', function(req, res) {
+        var editId = req.params.editId;
+        LeaveDate.find({_id: editId}, function(err, data) {
+            if(err) throw err;
+            res.json(data);
+        });
+    });
+
     app.post('/', urlencodedParser, function(req, res) {
         var newLeave = LeaveDate(req.body).save(function(err, data) {
             if(err) console.log('Ошибка при сохранении' + err);
@@ -35,6 +43,13 @@ module.exports = function(app) {
 
     app.delete('/:itemId', function(req, res) {
         LeaveDate.find({_id: req.params.itemId}).remove(function(err, data) {
+            if(err) throw err;
+            res.json(data);
+        });
+    });
+
+    app.put('/:updateId', urlencodedParser, function(req, res) {
+        LeaveDate.update({_id: req.params.updateId}, req.body, function(err, data) {
             if(err) throw err;
             res.json(data);
         });

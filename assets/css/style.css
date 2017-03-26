@@ -4,6 +4,9 @@ body {
 a {
     outline: none;
 }
+.hidden {
+    display: none;
+}
 .main-wrapper {
     padding: 20px;
 }

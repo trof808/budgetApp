@@ -29,6 +29,64 @@ $(document).ready(function() {
         $(this).removeClass('active');
     });
 
+    function editModalData(editOptions) {
+        var catExpense = ["Питание", "Развлечение", "Транспорт", "Другое"];
+        var catProfit = ["Заплата", "Другое"];
+
+        var editOptions = editOptions;
+        $('#editItem #pb-date-item').val(editOptions.date);
+        $('#editItem #pb-tag-item').val(editOptions.category);
+        $('#editItem #pb-desc-item').val(editOptions.description);
+        $('#editItem #pb-sum-item').val(editOptions.sum);
+        $('#editItem #editItemLabel').text(editOptions.type);
+        $('#editItem #pb-id-item').val(editOptions._id);
+
+        if((editOptions.type == 'расход') && ($('select[id="pb-tag-item"] option').length == 0)) {
+            catExpense.forEach(function(item, i) {
+                $('#editItem #pb-tag-item').prepend('<option>'+item+'</option>');
+            });
+        } else if((editOptions.type == 'доход') && ($('select[id="pb-tag-item"] option').length == 0)){
+            catProfit.forEach(function(item, i) {
+                $('#editItem #pb-tag-item').prepend('<option>'+item+'</option>');
+            });
+        }
+    }
+
+    $('#editItem .close').on('click', function(e) {
+        $('#pb-tag-item').empty();
+    });
+
+    $('#pb-form-edit').on('submit', function() {
+        var updateId = $('#pb-id-item').val();
+        var updateDate = $('#pb-date-item').val();
+        var updateCat = $('#pb-tag-item :selected').val();
+        var updateDesc = $('#pb-desc-item').val();
+        var updateSum = $('#pb-sum-item').val();
+
+        var updateData = {date: updateDate, category:updateCat, description: updateDesc, sum: updateSum};
+
+        $.ajax({
+            type: 'PUT',
+            url: '/'+updateId,
+            data: updateData,
+            success: function(data) {
+                location.reload();
+            }
+        });
+    });
+
+    $('.pb-btn-edit').on('click', function() {
+        var editId = $(this).data('edit');
+
+        $.get({
+            url: '/' + editId,
+            success: function(data) {
+                var editOptions = data[0];
+                editModalData(editOptions);
+            }
+        })
+    });
+
     $('#pb-form-leave').on('submit', function() {
 
         var typeLeave = 'расход';
@@ -44,7 +102,7 @@ $(document).ready(function() {
             url: '/',
             data: dataLeave,
             success: function(data) {
-                // location.reload();
+                location.reload();
             }
         });
         return false;
@@ -60,14 +118,12 @@ $(document).ready(function() {
 
         var dataLeave = {type: typeProfit, date: dateProfit, category: categoryProfit, description: descriptionProfit, sum: sumProfit};
 
-        // console.log(sumLeave);
-
         $.ajax({
             type: 'POST',
             url: '/',
             data: dataLeave,
             success: function(data) {
-                // location.reload();
+                location.reload();
             }
         });
         return false;
@@ -80,7 +136,7 @@ $(document).ready(function() {
             type: 'DELETE',
             url: '/'+itemId,
             success: function(data) {
-                // location.reload();
+                location.reload();
             }
         });
     });

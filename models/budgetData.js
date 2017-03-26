@@ -1,10 +1,6 @@
 var mongoose = require('mongoose');
 
 var LeaveDate = new mongoose.Schema({
-    id: {
-        type: Number,
-        unique: true
-    },
     type: String,
     date: String,
     category: String,
