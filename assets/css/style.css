@@ -4,6 +4,9 @@ body {
 a {
     outline: none;
 }
+nav.navbar.navbar-toggleable-md.navbar-light.bg-faded {
+    box-shadow: 0px 0px 6px;
+}
 .hidden {
     display: none;
 }
@@ -35,11 +38,15 @@ td, th {
     text-align: center;
 }
 
+table td {
+    font-size:15px;
+}
+
 td.pb-leave {
     color: red;
 }
 td.pb-profit {
-    color: #0D3;
+    color: #00cc00;
 }
 td.pb-cat .fa {
     font-size: 13px;

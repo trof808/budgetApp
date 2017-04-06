@@ -1,15 +1,9 @@
-var bodyParser = require('body-parser');
-var mongoose = require('mongoose');
 var LeaveDate = require('../models/budgetData');
 var User = require('../models/user');
 var budgetApi = require('../api/budgetApi');
 var userApi = require('../api/userApi');
 
-mongoose.connect('mongodb://trof:585465077m@ds137230.mlab.com:37230/budgetwebapp');
-
-var urlencodedParser = bodyParser.urlencoded({ extended: false });
-
-module.exports = function(app) {
+module.exports = function(app, dbConnect) {
     app.get('/', function(req, res) {
 
         var options = {
@@ -17,10 +11,14 @@ module.exports = function(app) {
             data: {}
         };
 
-        LeaveDate.find({}, function (err, data) {
+        var today = options.currentDate.split('-')[0] + '-' + options.currentDate.split('-')[1];
+        LeaveDate.find({date: new RegExp(today)}, null, {sort: {date: 1}}, function (err, data) {
             if(err) throw err;
             if(data !== {}) {
-                options.data = data
+                data.forEach(function(item) {
+                    item.date = budgetApi.formatDateUi(item.date);
+                });
+                options.data = data;
             }
             res.render('index', {options: options});
         });
@@ -34,7 +32,7 @@ module.exports = function(app) {
         });
     });
 
-    app.post('/', urlencodedParser, function(req, res) {
+    app.post('/', function(req, res) {
         var newLeave = LeaveDate(req.body).save(function(err, data) {
             if(err) console.log('Ошибка при сохранении' + err);
             res.json(data);
@@ -48,7 +46,7 @@ module.exports = function(app) {
         });
     });
 
-    app.put('/:updateId', urlencodedParser, function(req, res) {
+    app.put('/:updateId', function(req, res) {
         LeaveDate.update({_id: req.params.updateId}, req.body, function(err, data) {
             if(err) throw err;
             res.json(data);
