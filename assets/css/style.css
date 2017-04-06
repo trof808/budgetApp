@@ -15,6 +15,18 @@ a {
     border-right: 1px solid #dddddd;
     border-left: 1px solid #dddddd;
 }
+.navbar {
+    box-shadow: 0px 0px 5px;
+}
+.navbar-nav .nav-item .nav-link {
+    transition: color .5s;
+}
+.navbar-nav .add-profit .nav-link:hover {
+    color: green;
+}
+.navbar-nav .add-expense .nav-link:hover {
+    color: red;
+}
 ul.pb-buttons-main {
     padding: 0;
     margin: 0;
@@ -34,7 +46,9 @@ li.pb-btn:hover, li.pb-btn.active {
 td, th {
     text-align: center;
 }
-
+.table thead th, .table td {
+    font-size:14px;
+}
 td.pb-leave {
     color: red;
 }

@@ -33,7 +33,7 @@ $(document).ready(function() {
         var catExpense = ["Питание", "Развлечение", "Транспорт", "Другое"];
         var catProfit = ["Заплата", "Другое"];
 
-        var editOptions = editOptions;
+        // var editOptions = editOptions;
         $('#editItem #pb-date-item').val(editOptions.date);
         $('#editItem #pb-tag-item').val(editOptions.category);
         $('#editItem #pb-desc-item').val(editOptions.description);
@@ -81,7 +81,7 @@ $(document).ready(function() {
         $.get({
             url: '/' + editId,
             success: function(data) {
-                var editOptions = data[0];
+                var editOptions = data;
                 editModalData(editOptions);
             }
         })

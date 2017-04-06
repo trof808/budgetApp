@@ -18,7 +18,7 @@ module.exports = function(app) {
         };
 
         LeaveDate.find({}, function (err, data) {
-            if(err) throw err;
+            if(err) console.log('Ошибка при получения данных из базы ' + err);
             if(data !== {}) {
                 options.data = data
             }
@@ -28,14 +28,15 @@ module.exports = function(app) {
 
     app.get('/:editId', function(req, res) {
         var editId = req.params.editId;
-        LeaveDate.find({_id: editId}, function(err, data) {
+        LeaveDate.findOne({_id: editId}, function(err, data) {
             if(err) throw err;
             res.json(data);
+            console.log(data);
         });
     });
 
     app.post('/', urlencodedParser, function(req, res) {
-        var newLeave = LeaveDate(req.body).save(function(err, data) {
+        new LeaveDate(req.body).save(function(err, data) {
             if(err) console.log('Ошибка при сохранении' + err);
             res.json(data);
         });
