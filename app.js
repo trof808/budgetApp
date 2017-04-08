@@ -17,10 +17,10 @@ app.listen(3000, function() {
     console.log('server is running at port 3000')
 });
 
-app.use(function(req, res, next) {
-    res.status(404);
-    res.render('error');
-});
+// app.use(function(req, res, next) {
+//     res.status(404);
+//     res.render('error');
+// });
 
 // app.use(function(req, res, next) {
 //     res.locals.showTets = req.app.get('env') !== 'production' && req.query.test === '1';

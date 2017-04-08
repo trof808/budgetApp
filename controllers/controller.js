@@ -26,14 +26,15 @@ module.exports = function(app, dbConnect) {
 
     app.get('/:editId', function(req, res) {
         var editId = req.params.editId;
-        LeaveDate.find({_id: editId}, function(err, data) {
-            if(err) throw err;
-            res.json(data);
+        LeaveDate.findOne({_id: editId}, function(err, data) {
+            if(err) console.log('Ошибка ' + err);
+            res.send(data);
+            console.log(data);
         });
     });
 
     app.post('/', function(req, res) {
-        var newLeave = LeaveDate(req.body).save(function(err, data) {
+        new LeaveDate(req.body).save(function(err, data) {
             if(err) console.log('Ошибка при сохранении' + err);
             res.json(data);
         });

@@ -12,9 +12,9 @@ block content
                         li.pb-btn.pb-btn-leave Расходы
                 .col-md-4
                     div.form-group.row
-                        //label.col-2.col-form-label(for="example-search-input") <i class="fa fa-search" aria-hidden="true"></i>
                         div.col-md-12
-                            input#example-search-input.form-control(type="search", placeholder="Поиск")
+                            form#search-form
+                                input#example-search-input.form-control(type="search", placeholder="Поиск", name="search")
             .pb-tables
                 table.table.table-hover
                     thead
