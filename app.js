@@ -1,10 +1,14 @@
-var mongoose = require('mongoose');
-var bodyParser = require('body-parser');
-var express = require('express');
-var Controller = require('./controllers/controller');
-var app = express();
+'use strict'
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const express = require('express');
+const Controller = require('./controllers/controller');
+const app = express();
 
-var dbConnect = mongoose.connect('mongodb://trof:585465077m@ds137230.mlab.com:37230/budgetwebapp');
+const dbConnect = mongoose.connect('mongodb://trof:585465077m@ds137230.mlab.com:37230/budgetwebapp');
+
+const PORT = process.env.PORT || 3000;
+const IP = process.env.IP || 'localhost';
 
 //set up template engine
 app.set('view engine', 'jade');
@@ -13,17 +17,6 @@ app.use('/assets', express.static('assets'));
 app.use(bodyParser.urlencoded({ extended: false }));
 Controller(app, dbConnect);
 
-app.listen(3000, function() {
-    console.log('server is running at port 3000')
+app.listen(PORT, IP, () => {
+    console.log('server is running at port ' + PORT);
 });
-
-// app.use(function(req, res, next) {
-//     res.status(404);
-//     res.render('error');
-// });
-
-// app.use(function(req, res, next) {
-//     res.locals.showTets = req.app.get('env') !== 'production' && req.query.test === '1';
-//     next();
-// });
-

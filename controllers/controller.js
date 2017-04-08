@@ -1,21 +1,20 @@
-var LeaveDate = require('../models/budgetData');
-var User = require('../models/user');
-var budgetApi = require('../api/budgetApi');
-var userApi = require('../api/userApi');
+'use strict'
+const LeaveDate = require('../models/budgetData');
+const budgetApi = require('../api/budgetApi');
 
 module.exports = function(app, dbConnect) {
     app.get('/', function(req, res) {
-
-        var options = {
+        
+        let options = {
             currentDate: budgetApi.formatDate(new Date()),
             data: {}
         };
 
-        var today = options.currentDate.split('-')[0] + '-' + options.currentDate.split('-')[1];
-        LeaveDate.find({date: new RegExp(today)}, null, {sort: {date: 1}}, function (err, data) {
+        let today = options.currentDate.split('-')[0] + '-' + options.currentDate.split('-')[1];
+        LeaveDate.find({date: new RegExp(today)}, null, {sort: {date: 1}}, (err, data) => {
             if(err) throw err;
             if(data !== {}) {
-                data.forEach(function(item) {
+                data.forEach((item) => {
                     item.date = budgetApi.formatDateUi(item.date);
                 });
                 options.data = data;
@@ -24,31 +23,31 @@ module.exports = function(app, dbConnect) {
         });
     });
 
-    app.get('/:editId', function(req, res) {
-        var editId = req.params.editId;
-        LeaveDate.findOne({_id: editId}, function(err, data) {
+    app.get('/:editId', (req, res) => {
+        let editId = req.params.editId;
+        LeaveDate.findOne({_id: editId}, (err, data) => {
             if(err) console.log('Ошибка ' + err);
             res.send(data);
             console.log(data);
         });
     });
 
-    app.post('/', function(req, res) {
-        new LeaveDate(req.body).save(function(err, data) {
+    app.post('/', (req, res) => {
+        new LeaveDate(req.body).save((err, data) => {
             if(err) console.log('Ошибка при сохранении' + err);
             res.json(data);
         });
     });
 
-    app.delete('/:itemId', function(req, res) {
-        LeaveDate.find({_id: req.params.itemId}).remove(function(err, data) {
+    app.delete('/:itemId', (req, res) => {
+        LeaveDate.find({_id: req.params.itemId}).remove((err, data) => {
             if(err) throw err;
             res.json(data);
         });
     });
 
-    app.put('/:updateId', function(req, res) {
-        LeaveDate.update({_id: req.params.updateId}, req.body, function(err, data) {
+    app.put('/:updateId', (req, res) => {
+        LeaveDate.update({_id: req.params.updateId}, req.body, (err, data) => {
             if(err) throw err;
             res.json(data);
         });
