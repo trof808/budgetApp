@@ -1,6 +1,6 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
-var LeaveDate = new mongoose.Schema({
+const LeaveDate = new mongoose.Schema({
     type: String,
     date: String,
     category: String,

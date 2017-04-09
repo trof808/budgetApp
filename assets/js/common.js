@@ -12,11 +12,11 @@ $(document).ready(function() {
         $('#editItem #editItemLabel').text(editOptions.type);
         $('#editItem #pb-id-item').val(editOptions._id);
 
-        if((editOptions.type == 'расход') && ($('select[id="pb-tag-item"] option').length == 0)) {
+        if((editOptions.type === 'расход') && ($('select[id="pb-tag-item"] option').length === 0)) {
             catExpense.forEach(function(item, i) {
                 $('#editItem #pb-tag-item').prepend('<option>'+item+'</option>');
             });
-        } else if((editOptions.type == 'доход') && ($('select[id="pb-tag-item"] option').length == 0)){
+        } else if((editOptions.type === 'доход') && ($('select[id="pb-tag-item"] option').length === 0)){
             catProfit.forEach(function(item, i) {
                 $('#editItem #pb-tag-item').prepend('<option>'+item+'</option>');
             });
