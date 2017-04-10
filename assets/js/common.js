@@ -115,4 +115,20 @@ $(document).ready(function() {
             }
         });
     });
+
+    $('#reg-form').on('submit', function() {
+        var email = $('#email').val();
+        var pass = $('#pass').val();
+
+        var data = {email: email, password: pass};
+
+        $.ajax({
+            type: 'POST',
+            url: '/user/register',
+            data: data,
+            success: function(user) {
+                location.reload();
+            }
+        });
+    });
 });

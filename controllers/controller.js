@@ -7,10 +7,11 @@ const UserApi = require('../api/userApi');
 
 
 router.get('/', (req, res, next) => {
-
+    req.session.reg = false;
     let options = {
         currentDate: budgetApi.formatDate(new Date()),
-        data: {}
+        data: {},
+        reg: req.session.reg
     };
 
     let today = options.currentDate.split('-')[0] + '-' + options.currentDate.split('-')[1];
@@ -54,10 +55,6 @@ router.put('/:updateId', (req, res, next) => {
         if(err) next();
         res.json(data);
     });
-});
-
-router.get('/register', (req, res, next) => {
-    res.render('register');
 });
 
 module.exports = router;

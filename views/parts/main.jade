@@ -4,15 +4,13 @@ html
         meta(name="viewport", content="width=device-width, initial-scale=1, shrink-to-fit=no")
         link(href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css", rel='stylesheet')
         link(href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css", rel='stylesheet')
-        link(href="assets/css/style.css", rel='stylesheet')
-        //if showTets
-        //    link(href="assets/vendor/mocha.css", rel='stylesheet')
+        link(href="/assets/css/style.css", rel='stylesheet')
         script(src="https://code.jquery.com/jquery-3.1.1.slim.min.js", integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n", crossorigin="anonymous")
         script(src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js", integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb", crossorigin="anonymous")
         script(src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js", integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn", crossorigin="anonymous")
         script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js")
-        script(src="assets/js/common.js")
-        script(src="assets/js/pb-ui.js")
+        script(src="/assets/js/common.js")
+        script(src="/assets/js/pb-ui.js")
     body
         block header
             nav.navbar.navbar-toggleable-md.navbar-light.bg-faded
@@ -20,15 +18,16 @@ html
                 .collapse.navbar-collapse
                     ul.navbar-nav.mr-auto.mt-2.mt-lg-0
                         li.nav-item
-                            a.nav-link(href='#') <i class="fa fa-home" aria-hidden="true"></i> Главная
-                        li.nav-item
-                            a.nav-link(href='#' data-toggle="modal", data-target="#profitModal") <i class="fa fa-plus" aria-hidden="true"></i> Добавить доход
-                        li.nav-item
-                            a.nav-link(href='#', data-toggle="modal", data-target="#expenseModal") <i class="fa fa-plus" aria-hidden="true"></i> Добавить расход
+                            a.nav-link(href='/') <i class="fa fa-home" aria-hidden="true"></i> Главная
+                        if (!options.reg)
+                            li.nav-item
+                                a.nav-link(href='#' data-toggle="modal", data-target="#profitModal") <i class="fa fa-plus" aria-hidden="true"></i> Добавить доход
+                            li.nav-item
+                                a.nav-link(href='#', data-toggle="modal", data-target="#expenseModal") <i class="fa fa-plus" aria-hidden="true"></i> Добавить расход
 
                     ul.navbar-nav.my-2.my-lg-0
                         li.nav-item
-                            a.nav-link(href="/register") Регистрация
+                            a.nav-link(href="/user/register") Регистрация
                         li.nav-item
                             a.nav-link(href="/login") Войти
         .main-wrapper
@@ -39,98 +38,99 @@ html
 
                 block rightSidebar
                     .col-md-2
-        .pb-footer
-            .modal.fade#expenseModal(tabindex="-1", role="dialog", aria-labelledby="expenseModal", aria-hidden="true")
-                .modal-dialog(role='document')
-                    .modal-content
-                        .modal-header
-                            h5.modal-title#exampleModalLabel Расход
-                            button.close(type='button', data-dismiss="modal", aria-label="Close")
-                                span(aria-hidden="true") &times;
-                        .modal-body
-                            form#pb-form-leave(method='POST', action='/')
-                                .form-group.row
-                                    label.col-4.col-form-label(for="pb-date") Дата
-                                    .col-8
-                                        input#pb-date.form-control(type="date", value="#{options.currentDate}")
-                                .form-group.row
-                                    label.col-4.col-form-label(for="pb-tag") Категория
-                                    .col-8
-                                        select#pb-tag.form-control
-                                            option Питание
-                                            option Развлечения
-                                            option Транспорт
-                                            option Другое
-                                .form-group.row
-                                    label.col-4.col-form-label(for="pb-desc") Описание
-                                    .col-8
-                                        input#pb-desc.form-control(type="text", value="")
-                                .form-group.row
-                                    label.col-4.col-form-label(for="pb-sum") Сумма (руб.)
-                                    .col-8
-                                        input#pb-sum.form-control(type="number", value="1000")
-                                .modal-footer
-                                    button.btn.btn-secondary(type="button", data-dismiss="modal") Закрыть
-                                    button#pb-send-leave.btn.btn-primary(type="submit") Добавить
-            .modal.fade#profitModal(tabindex="-1", role="dialog", aria-labelledby="profitModal", aria-hidden="true")
-                .modal-dialog(role='document')
-                    .modal-content
-                        .modal-header
-                            h5.modal-title#profitModalLabel Доход
-                            button.close(type='button', data-dismiss="modal", aria-label="Close")
-                                span(aria-hidden="true") &times;
-                        .modal-body
-                            form#pb-form-profit(method='POST', action='/')
-                                .form-group.row
-                                    label.col-4.col-form-label(for="pb-date-profit") Дата
-                                    .col-8
-                                        input#pb-date-profit.form-control(type="date", value="#{options.currentDate}")
-                                .form-group.row
-                                    label.col-4.col-form-label(for="pb-tag-profit") Категория
-                                    .col-8
-                                        select#pb-tag-profit.form-control
-                                            option Зарплата
-                                            option Другое
-                                .form-group.row
-                                    label.col-4.col-form-label(for="pb-desc-profit") Описание
-                                    .col-8
-                                        input#pb-desc-profit.form-control(type="text", value="")
-                                .form-group.row
-                                    label.col-4.col-form-label(for="pb-sum-profit") Сумма (руб.)
-                                    .col-8
-                                        input#pb-sum-profit.form-control(type="number", value="1000")
-                                .modal-footer
-                                    button.btn.btn-secondary(type="button", data-dismiss="modal") Закрыть
-                                    button#pb-send-profit.btn.btn-primary(type="submit") Добавить
+        if (!options.reg)
+            .pb-footer
+                .modal.fade#expenseModal(tabindex="-1", role="dialog", aria-labelledby="expenseModal", aria-hidden="true")
+                    .modal-dialog(role='document')
+                        .modal-content
+                            .modal-header
+                                h5.modal-title#exampleModalLabel Расход
+                                button.close(type='button', data-dismiss="modal", aria-label="Close")
+                                    span(aria-hidden="true") &times;
+                            .modal-body
+                                form#pb-form-leave(method='POST', action='/')
+                                    .form-group.row
+                                        label.col-4.col-form-label(for="pb-date") Дата
+                                        .col-8
+                                            input#pb-date.form-control(type="date", value="#{options.currentDate}")
+                                    .form-group.row
+                                        label.col-4.col-form-label(for="pb-tag") Категория
+                                        .col-8
+                                            select#pb-tag.form-control
+                                                option Питание
+                                                option Развлечения
+                                                option Транспорт
+                                                option Другое
+                                    .form-group.row
+                                        label.col-4.col-form-label(for="pb-desc") Описание
+                                        .col-8
+                                            input#pb-desc.form-control(type="text", value="")
+                                    .form-group.row
+                                        label.col-4.col-form-label(for="pb-sum") Сумма (руб.)
+                                        .col-8
+                                            input#pb-sum.form-control(type="number", value="1000")
+                                    .modal-footer
+                                        button.btn.btn-secondary(type="button", data-dismiss="modal") Закрыть
+                                        button#pb-send-leave.btn.btn-primary(type="submit") Добавить
+                .modal.fade#profitModal(tabindex="-1", role="dialog", aria-labelledby="profitModal", aria-hidden="true")
+                    .modal-dialog(role='document')
+                        .modal-content
+                            .modal-header
+                                h5.modal-title#profitModalLabel Доход
+                                button.close(type='button', data-dismiss="modal", aria-label="Close")
+                                    span(aria-hidden="true") &times;
+                            .modal-body
+                                form#pb-form-profit(method='POST', action='/')
+                                    .form-group.row
+                                        label.col-4.col-form-label(for="pb-date-profit") Дата
+                                        .col-8
+                                            input#pb-date-profit.form-control(type="date", value="#{options.currentDate}")
+                                    .form-group.row
+                                        label.col-4.col-form-label(for="pb-tag-profit") Категория
+                                        .col-8
+                                            select#pb-tag-profit.form-control
+                                                option Зарплата
+                                                option Другое
+                                    .form-group.row
+                                        label.col-4.col-form-label(for="pb-desc-profit") Описание
+                                        .col-8
+                                            input#pb-desc-profit.form-control(type="text", value="")
+                                    .form-group.row
+                                        label.col-4.col-form-label(for="pb-sum-profit") Сумма (руб.)
+                                        .col-8
+                                            input#pb-sum-profit.form-control(type="number", value="1000")
+                                    .modal-footer
+                                        button.btn.btn-secondary(type="button", data-dismiss="modal") Закрыть
+                                        button#pb-send-profit.btn.btn-primary(type="submit") Добавить
 
-            .modal.fade#editItem(tabindex="-1", role="dialog", aria-labelledby="editItem", aria-hidden="true")
-                .modal-dialog(role='document')
-                    .modal-content
-                        .modal-header
-                            h5.modal-title#editItemLabel
-                            button.close(type='button', data-dismiss="modal", aria-label="Close")
-                                span(aria-hidden="true") &times;
-                        .modal-body
-                            form#pb-form-edit(method='PUT', action='/')
-                                .form-group.row
-                                    .col-8
-                                        input#pb-id-item.form-control.hidden(type="text", value="")
-                                .form-group.row
-                                    label.col-4.col-form-label(for="pb-date-item") Дата
-                                    .col-8
-                                        input#pb-date-item.form-control(type="date", value="#{options.currentDate}")
-                                .form-group.row
-                                    label.col-4.col-form-label(for="pb-tag-item") Категория
-                                    .col-8
-                                        select#pb-tag-item.form-control
-                                .form-group.row
-                                    label.col-4.col-form-label(for="pb-desc-item") Описание
-                                    .col-8
-                                        input#pb-desc-item.form-control(type="text", value="")
-                                .form-group.row
-                                    label.col-4.col-form-label(for="pb-sum-item") Сумма (руб.)
-                                    .col-8
-                                        input#pb-sum-item.form-control(type="number", value="1000")
-                                .modal-footer
-                                    button.btn.btn-secondary(type="button", data-dismiss="modal") Закрыть
-                                    button#pb-send-edit.btn.btn-primary(type="submit") Обновить
+                .modal.fade#editItem(tabindex="-1", role="dialog", aria-labelledby="editItem", aria-hidden="true")
+                    .modal-dialog(role='document')
+                        .modal-content
+                            .modal-header
+                                h5.modal-title#editItemLabel
+                                button.close(type='button', data-dismiss="modal", aria-label="Close")
+                                    span(aria-hidden="true") &times;
+                            .modal-body
+                                form#pb-form-edit(method='PUT', action='/')
+                                    .form-group.row
+                                        .col-8
+                                            input#pb-id-item.form-control.hidden(type="text", value="")
+                                    .form-group.row
+                                        label.col-4.col-form-label(for="pb-date-item") Дата
+                                        .col-8
+                                            input#pb-date-item.form-control(type="date", value="#{options.currentDate}")
+                                    .form-group.row
+                                        label.col-4.col-form-label(for="pb-tag-item") Категория
+                                        .col-8
+                                            select#pb-tag-item.form-control
+                                    .form-group.row
+                                        label.col-4.col-form-label(for="pb-desc-item") Описание
+                                        .col-8
+                                            input#pb-desc-item.form-control(type="text", value="")
+                                    .form-group.row
+                                        label.col-4.col-form-label(for="pb-sum-item") Сумма (руб.)
+                                        .col-8
+                                            input#pb-sum-item.form-control(type="number", value="1000")
+                                    .modal-footer
+                                        button.btn.btn-secondary(type="button", data-dismiss="modal") Закрыть
+                                        button#pb-send-edit.btn.btn-primary(type="submit") Обновить
