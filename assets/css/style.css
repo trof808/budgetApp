@@ -10,6 +10,9 @@ nav.navbar.navbar-toggleable-md.navbar-light.bg-faded {
 .hidden {
     display: none;
 }
+.navbar-right {
+    float: right;
+}
 .main-wrapper {
     padding: 20px;
 }

@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 exports.formatDate = (date) => {
     let day = date.getDate();

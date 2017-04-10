@@ -3,9 +3,10 @@ const LeaveDate = require('../models/budgetData');
 const budgetApi = require('../api/budgetApi');
 const express = require('express');
 const router = express.Router();
+const UserApi = require('../api/userApi');
 
 
-router.get('/', function(req, res, next) {
+router.get('/', (req, res, next) => {
 
     let options = {
         currentDate: budgetApi.formatDate(new Date()),
@@ -53,6 +54,10 @@ router.put('/:updateId', (req, res, next) => {
         if(err) next();
         res.json(data);
     });
+});
+
+router.get('/register', (req, res, next) => {
+    res.render('register');
 });
 
 module.exports = router;

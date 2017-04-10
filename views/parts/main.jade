@@ -18,13 +18,19 @@ html
             nav.navbar.navbar-toggleable-md.navbar-light.bg-faded
                 a.navbar-brand(href='#') <i class="fa fa-line-chart" aria-hidden="true"></i> Personal Budget
                 .collapse.navbar-collapse
-                    ul.navbar-nav
+                    ul.navbar-nav.mr-auto.mt-2.mt-lg-0
                         li.nav-item
                             a.nav-link(href='#') <i class="fa fa-home" aria-hidden="true"></i> Главная
                         li.nav-item
                             a.nav-link(href='#' data-toggle="modal", data-target="#profitModal") <i class="fa fa-plus" aria-hidden="true"></i> Добавить доход
                         li.nav-item
                             a.nav-link(href='#', data-toggle="modal", data-target="#expenseModal") <i class="fa fa-plus" aria-hidden="true"></i> Добавить расход
+
+                    ul.navbar-nav.my-2.my-lg-0
+                        li.nav-item
+                            a.nav-link(href="/register") Регистрация
+                        li.nav-item
+                            a.nav-link(href="/login") Войти
         .main-wrapper
             .row
                 block leftSidebar
