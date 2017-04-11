@@ -31,10 +31,6 @@ app.use(session({
     secret: config.cookieSecret
 }));
 
-//routing
-app.use('/', mainController);
-app.use('/user', userController);
-
 //logger
 if (app.get('env') === 'development') {
     app.use(require('morgan')('dev'));
@@ -44,16 +40,38 @@ if (app.get('env') === 'development') {
     }));
 }
 
+//shows which worker handle requests
+// app.use((req, res, next) => {
+//     const cluster = require('cluster');
+//     if(cluster.isWorker) {
+//         console.log('Исполнитель ' + cluster.worker.id + ' получил запрос');
+//         next();
+//     }
+//     next();
+// });
+
+//routing
+app.use('/', mainController);
+app.use('/user', userController);
+
 //error handling
 app.use((err, req, res, next) => {
     res.status(err.status || 500);
-    res.send({
+    res.render('error', {
         message: err.message,
         error: err
     });
 });
 
 //listening server
-app.listen(PORT, IP, () => {
-    console.log('server is running at port ' + PORT + ' в среде ' + app.get('env'));
-});
+const startServer = () => {
+    app.listen(PORT, IP, () => {
+        console.log('server is running at port ' + PORT + ' в среде ' + app.get('env'));
+    });
+};
+if(require.main === module) {
+    startServer();
+} else {
+    module.exports = startServer;
+}
+

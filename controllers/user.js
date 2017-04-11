@@ -13,11 +13,16 @@ router.get('/register', (req, res, next) => {
 });
 
 router.post('/register', (req, res, next) => {
-    new User({email: req.body.email, password: req.body.password}).save((err, user) => {
-        if(err) next();
-        // console.log(user);
-        res.redirect('/user/login');
-    });
+    if(!(req.body.email === '') && !(req.body.password === '')) {
+        new User({email: req.body.email, password: req.body.password}).save((err, user) => {
+            if(err) next();
+            // console.log(user);
+            res.redirect('/user/login');
+        });
+    } else {
+        next();
+    }
+
 });
 
 router.get('/login', (req, res, next) => {
