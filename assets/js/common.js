@@ -122,11 +122,10 @@ $(document).ready(function() {
 
         var data = {email: email, password: pass};
 
-        $.ajax({
-            type: 'POST',
+        $.post({
             url: '/user/register',
             data: data,
-            success: function(user) {
+            success: function(data) {
                 location.reload();
             }
         });

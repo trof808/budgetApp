@@ -74,7 +74,7 @@ td.pb-btn-edit {
 tr.active td.pb-btn-close {
     opacity:1;
 }
-form#reg-form {
+form.pb-form {
     width: 500px;
     margin: auto;
 }
@@ -82,5 +82,10 @@ form#reg-form {
     padding: 20px;
     border-left: 1px solid #eee;
     border-right: 1px solid #eee;
+}
+a.reg-page {
+    font-size: 14px;
+    color: #777;
+    margin-left: 16px;
 }
 

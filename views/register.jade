@@ -3,7 +3,9 @@ extends parts/main.jade
 block content
     .col-md-8
         .pb-reg-form
-            form#reg-form(method="POST", action="/user/register")
+            form#reg-form.pb-form(method="POST")
+                h3.form-title Регистрация
+                hr
                 .form-group
                     label(for="email") Введите email
                     input.form-control#email(type="email", aria-describedby="emailHelp", placeholder="Введите email")
@@ -11,3 +13,4 @@ block content
                     label(for="pass") Введите пароль
                     input.form-control#pass(type="password", placeholder="Введите пароль")
                 button.btn.btn-primary(type="submit") Зарегистрироваться
+                a.reg-page(href="/user/login") Войти

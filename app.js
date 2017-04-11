@@ -24,20 +24,27 @@ app.use('/assets', express.static(path.join(__dirname, 'assets')));
 app.use(bodyParser.urlencoded({ extended: false }));
 
 //set up sessions
-app.use(cookieParser());
 app.use(cookieParser(config.cookieSecret));
 app.use(session({
     resave: false,
     saveUninitialized: false,
     secret: config.cookieSecret
-    // store: new MongoStore({
-    //     mongoose_connection: dbConnect
-    // })
 }));
 
+//routing
 app.use('/', mainController);
 app.use('/user', userController);
 
+//logger
+if (app.get('env') === 'development') {
+    app.use(require('morgan')('dev'));
+} else if ((app.get('env') === 'production')) {
+    app.use(require('express-logger')({
+        path: __dirname + '/log/request.log'
+    }));
+}
+
+//error handling
 app.use((err, req, res, next) => {
     res.status(err.status || 500);
     res.send({
@@ -46,6 +53,7 @@ app.use((err, req, res, next) => {
     });
 });
 
+//listening server
 app.listen(PORT, IP, () => {
-    console.log('server is running at port ' + PORT);
+    console.log('server is running at port ' + PORT + ' в среде ' + app.get('env'));
 });

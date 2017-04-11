@@ -13,9 +13,19 @@ router.get('/register', (req, res, next) => {
 });
 
 router.post('/register', (req, res, next) => {
-    User.create({email: req.body.email, password: req.body.password}).then((user) => {
-        res.send(user);
-    }).catch(next());
+    new User({email: req.body.email, password: req.body.password}).save((err, user) => {
+        if(err) next();
+        // console.log(user);
+        res.redirect('/user/login');
+    });
+});
+
+router.get('/login', (req, res, next) => {
+    req.session.reg = true;
+    let options = {
+        reg: req.session.reg
+    };
+    res.render('login', {options: options});
 });
 
 module.exports = router;
