@@ -40,16 +40,6 @@ if (app.get('env') === 'development') {
     }));
 }
 
-//shows which worker handle requests
-// app.use((req, res, next) => {
-//     const cluster = require('cluster');
-//     if(cluster.isWorker) {
-//         console.log('Исполнитель ' + cluster.worker.id + ' получил запрос');
-//         next();
-//     }
-//     next();
-// });
-
 //routing
 app.use('/', mainController);
 app.use('/user', userController);
@@ -74,4 +64,3 @@ if(require.main === module) {
 } else {
     module.exports = startServer;
 }
-
