@@ -3,11 +3,11 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
-const mainController = require('./controllers/controller');
-const userController = require('./controllers/user');
+
 const config = require('./config');
-const MongoStore = require('connect-mongo')(session);
 const path = require('path');
+const pg = require('pg');
+const mainController = require('./controllers/controller');
 
 const app = express();
 
@@ -42,7 +42,7 @@ if (app.get('env') === 'development') {
 
 //routing
 app.use('/', mainController);
-app.use('/user', userController);
+// app.use('/user', userController);
 
 //error handling
 app.use((err, req, res, next) => {

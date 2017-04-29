@@ -1,60 +1,91 @@
 'use strict';
-const LeaveDate = require('../models/budgetData');
 const budgetApi = require('../api/budgetApi');
 const express = require('express');
 const router = express.Router();
-const UserApi = require('../api/userApi');
+const pg = require('pg');
+const config = require('../config');
 
 
 router.get('/', (req, res, next) => {
-    req.session.reg = false;
+
     let options = {
         currentDate: budgetApi.formatDate(new Date()),
-        data: {},
-        reg: req.session.reg
+        data: []
     };
 
     let today = options.currentDate.split('-')[0] + '-' + options.currentDate.split('-')[1];
-    LeaveDate.find({date: new RegExp(today)}, null, {sort: {date: 1}}, (err, data) => {
-        if(err) next();
-        if(data !== {}) {
-            data.forEach((item) => {
-                item.date = budgetApi.formatDateUi(item.date);
-            });
-            options.data = data;
-        }
-        res.render('index', {options: options});
-    });
-});
 
-router.get('/:editId', (req, res, next) => {
-    let editId = req.params.editId;
-    LeaveDate.findOne({_id: editId}, (err, data) => {
-        if(err) next();
-        res.send(data);
-        console.log(data);
+    pg.connect(config.connectionString, (err, client, done) => {
+      if(err) {
+        done();
+        next();
+      } else {
+        const query = client.query('SELECT * FROM data');
+        query.on('row', (row) => {
+          options.data.push(row);
+          console.log(row);
+        });
+        query.on('end', () => {
+          done();
+          res.render('index', {options: options});
+        });
+      }
     });
+
 });
 
 router.post('/', (req, res, next) => {
-    new LeaveDate(req.body).save((err, data) => {
-        if(err) next();
-        res.json(data);
+
+    let data = req.body;
+
+    let options = {
+        currentDate: budgetApi.formatDate(new Date()),
+        data: []
+    };
+
+    pg.connect(config.connectionString, (err, client, done) => {
+      if(err) {
+        console.log(err);
+        next();
+      } else {
+        client.query('INSERT INTO data(type, date, category, description, sum) values($1, $2, $3, $4, $5)', [data.type, data.date, data.category, data.description, data.sum]);
+        const query = client.query('SELECT * FROM data ORDER BY id ASC');
+
+        query.on('row', (row) => {
+          options.data.push(row);
+          console.log(row);
+        });
+        query.on('end', () => {
+          done();
+          return res.json(options.data);
+        });
+      }
     });
+
 });
 
-router.delete('/:itemId', (req, res, next) => {
-    LeaveDate.find({_id: req.params.itemId}).remove((err, data) => {
-        if(err) next();
-        res.json(data);
-    });
-});
+// router.get('/:editId', (req, res, next) => {
+//     let editId = req.params.editId;
+//     LeaveDate.findOne({_id: editId}, (err, data) => {
+//         if(err) next();
+//         res.send(data);
+//         console.log(data);
+//     });
+// });
 
-router.put('/:updateId', (req, res, next) => {
-    LeaveDate.update({_id: req.params.updateId}, req.body, (err, data) => {
-        if(err) next();
-        res.json(data);
-    });
-});
+// router.delete('/:itemId', (req, res, next) => {
+//     LeaveDate.find({_id: req.params.itemId}).remove((err, data) => {
+//         if(err) next();
+//         res.json(data);
+//     });
+// });
+//
+// router.put('/:updateId', (req, res, next) => {
+//     LeaveDate.update({_id: req.params.updateId}, req.body, (err, data) => {
+//         if(err) next();
+//         res.json(data);
+//     });
+// });
+
 
 module.exports = router;
