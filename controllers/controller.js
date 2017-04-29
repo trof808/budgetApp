@@ -73,12 +73,36 @@ router.post('/', (req, res, next) => {
 //     });
 // });
 
-// router.delete('/:itemId', (req, res, next) => {
-//     LeaveDate.find({_id: req.params.itemId}).remove((err, data) => {
-//         if(err) next();
-//         res.json(data);
-//     });
-// });
+router.delete('/:itemId', (req, res, next) => {
+
+    let options = {
+        currentDate: budgetApi.formatDate(new Date()),
+        data: []
+    };
+
+    pg.connect(config.connectionString, (err, client, done) => {
+      if(err) {
+        done();
+        next();
+      } else {
+        client.query('DELETE FROM data WHERE id=($1)', [req.params.itemId]);
+        const query = client.query('SELECT * FROM data ORDER BY id ASC');
+        query.on('row', (row) => {
+          options.data.push(row);
+          console.log(row);
+        });
+        query.on('end', () => {
+          done();
+          res.json(options.data);
+        });
+      }
+    });
+
+    // LeaveDate.find({_id: req.params.itemId}).remove((err, data) => {
+    //     if(err) next();
+    //     res.json(data);
+    // });
+});
 //
 // router.put('/:updateId', (req, res, next) => {
 //     LeaveDate.update({_id: req.params.updateId}, req.body, (err, data) => {
