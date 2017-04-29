@@ -23,7 +23,6 @@ router.get('/', (req, res, next) => {
         const query = client.query('SELECT * FROM data');
         query.on('row', (row) => {
           options.data.push(row);
-          console.log(row);
         });
         query.on('end', () => {
           done();
@@ -64,14 +63,35 @@ router.post('/', (req, res, next) => {
 
 });
 
-// router.get('/:editId', (req, res, next) => {
-//     let editId = req.params.editId;
-//     LeaveDate.findOne({_id: editId}, (err, data) => {
-//         if(err) next();
-//         res.send(data);
-//         console.log(data);
-//     });
-// });
+router.get('/:editId', (req, res, next) => {
+    let options = {
+        currentDate: budgetApi.formatDate(new Date()),
+        data: [],
+        selectedItem: {}
+    };
+
+    let editId = req.params.editId;
+
+    pg.connect(config.connectionString, (err, client, done) => {
+      if(err) {
+        done();
+        next();
+      } else {
+        const query = client.query('SELECT * FROM data WHERE id=($1)', [editId]);
+
+        query.on('row', (row) => {
+          options.selectedItem = row;
+          console.log(row);
+        });
+        query.on('end', () => {
+          console.log(options.selectedItem);
+          done();
+          return res.json(options.selectedItem);
+
+        });
+      }
+    });
+});
 
 router.delete('/:itemId', (req, res, next) => {
 
@@ -89,7 +109,6 @@ router.delete('/:itemId', (req, res, next) => {
         const query = client.query('SELECT * FROM data ORDER BY id ASC');
         query.on('row', (row) => {
           options.data.push(row);
-          console.log(row);
         });
         query.on('end', () => {
           done();
@@ -98,12 +117,8 @@ router.delete('/:itemId', (req, res, next) => {
       }
     });
 
-    // LeaveDate.find({_id: req.params.itemId}).remove((err, data) => {
-    //     if(err) next();
-    //     res.json(data);
-    // });
 });
-//
+
 // router.put('/:updateId', (req, res, next) => {
 //     LeaveDate.update({_id: req.params.updateId}, req.body, (err, data) => {
 //         if(err) next();
