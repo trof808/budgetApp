@@ -14,7 +14,7 @@ const app = express();
 
 const dbConnect = require('./db/db');
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 const IP = process.env.IP || 'localhost';
 
 //set up template engine
