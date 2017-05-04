@@ -119,12 +119,27 @@ router.delete('/:itemId', (req, res, next) => {
 
 });
 
-// router.put('/:updateId', (req, res, next) => {
-//     LeaveDate.update({_id: req.params.updateId}, req.body, (err, data) => {
-//         if(err) next();
-//         res.json(data);
-//     });
-// });
+router.put('/:updateId', (req, res, next) => {
+  var data = req.body
+  pg.connect(config.connectionString, (err, client, done) => {
+    if(err) {
+      done();
+      next();
+    } else {
+      client.query('UPDATE data SET type=($1), date=($2), category=($3), description=($4), sum=($5)  WHERE id=($6)',
+      [data.type, data.date, data.category, data.description, data.sum, req.params.updateId]);
+      const query = client.query('SELECT * FROM data ORDER BY id ASC');
+      query.on('row', (row) => {
+        options.data.push(row);
+      });
+      query.on('end', () => {
+        done();
+        res.json(options.data);
+      });
+    }
+  });
+
+});
 
 
 module.exports = router;

@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const pgSession = require('connect-pg-simple')(session);
 
 const config = require('./config');
 const path = require('path');
@@ -28,7 +29,12 @@ app.use(cookieParser(config.cookieSecret));
 app.use(session({
     resave: false,
     saveUninitialized: false,
-    secret: config.cookieSecret
+    secret: config.cookieSecret,
+    store: new pgSession({
+      pg: pg,
+      conString: config.connectionString,
+      tableName: 'sessions_table'
+    })
 }));
 
 //logger

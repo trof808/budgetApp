@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    
+
     function editModalData(editOptions) {
         var catExpense = ["Питание", "Развлечение", "Транспорт", "Другое"];
         var catProfit = ["Заплата", "Другое"];
@@ -26,8 +26,15 @@ $(document).ready(function() {
     $('#editItem .close').on('click', function(e) {
         $('#pb-tag-item').empty();
     });
-    $('#editItem').on('click', function(e) {
+
+    $('body').on('mouseup', function(e) {
+      if($(e.target).closest('.modal-content').length){
+        return
+      } else {
         $('#pb-tag-item').empty();
+        e.stopPropagation();
+      }
+
     });
 
     $('#pb-form-edit').on('submit', function() {
