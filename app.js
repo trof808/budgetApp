@@ -14,6 +14,9 @@ const app = express();
 
 const dbConnect = require('./db/db');
 
+var favicon = require('serve-favicon');
+app.use(favicon(path.join(__dirname,'assets','img','favicon.ico')));
+
 const PORT = process.env.PORT || 3001;
 const IP = process.env.IP || 'localhost';
 

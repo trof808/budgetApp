@@ -20,7 +20,7 @@ router.get('/', (req, res, next) => {
         done();
         next();
       } else {
-        const query = client.query('SELECT * FROM data');
+        const query = client.query('SELECT * FROM data ORDER BY date ASC');
         query.on('row', (row) => {
           options.data.push(row);
         });
@@ -48,7 +48,7 @@ router.post('/', (req, res, next) => {
         next();
       } else {
         client.query('INSERT INTO data(type, date, category, description, sum) values($1, $2, $3, $4, $5)', [data.type, data.date, data.category, data.description, data.sum]);
-        const query = client.query('SELECT * FROM data ORDER BY id ASC');
+        const query = client.query('SELECT * FROM data ORDER BY date ASC');
 
         query.on('row', (row) => {
           options.data.push(row);
@@ -106,7 +106,7 @@ router.delete('/:itemId', (req, res, next) => {
         next();
       } else {
         client.query('DELETE FROM data WHERE id=($1)', [req.params.itemId]);
-        const query = client.query('SELECT * FROM data ORDER BY id ASC');
+        const query = client.query('SELECT * FROM data ORDER BY date ASC');
         query.on('row', (row) => {
           options.data.push(row);
         });
@@ -120,16 +120,20 @@ router.delete('/:itemId', (req, res, next) => {
 });
 
 router.put('/:updateId', (req, res, next) => {
+  let options = {
+    data: []
+  }
   var data = req.body
   pg.connect(config.connectionString, (err, client, done) => {
     if(err) {
       done();
       next();
     } else {
-      client.query('UPDATE data SET type=($1), date=($2), category=($3), description=($4), sum=($5)  WHERE id=($6)',
-      [data.type, data.date, data.category, data.description, data.sum, req.params.updateId]);
-      const query = client.query('SELECT * FROM data ORDER BY id ASC');
+      client.query('UPDATE data SET date=($1), category=($2), description=($3), sum=($4)  WHERE id=($5)',
+      [data.date, data.category, data.description, data.sum, req.params.updateId]);
+      const query = client.query('SELECT * FROM data ORDER BY date ASC');
       query.on('row', (row) => {
+        console.log(row);
         options.data.push(row);
       });
       query.on('end', () => {

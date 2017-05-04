@@ -10,7 +10,7 @@ $(document).ready(function() {
         $('#editItem #pb-desc-item').val(editOptions.description);
         $('#editItem #pb-sum-item').val(editOptions.sum);
         $('#editItem #editItemLabel').text(editOptions.type);
-        $('#editItem #pb-id-item').val(editOptions._id);
+        $('#editItem #pb-id-item').val(editOptions.id);
 
         if((editOptions.type === 'расход') && ($('select[id="pb-tag-item"] option').length === 0)) {
             catExpense.forEach(function(item, i) {
@@ -58,7 +58,6 @@ $(document).ready(function() {
 
     $('.pb-btn-edit').on('click', function() {
         var editId = $(this).data('edit');
-
         $.ajax({
             type: 'GET',
             url: '/' + editId,
