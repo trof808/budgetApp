@@ -6,14 +6,6 @@ import './App.css';
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {items: []}
-  }
-
-
-  componentDidMount() {
-    // fetch('/data')
-    //   .then(res => res.json())
-    //   .then(items => this.setState({ items }))
   }
 
   render() {

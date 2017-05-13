@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Search from '../searchComponent/searchComponent';
+import ItemTable from '../itemTableComponent/itemTableComponent';
 
 import './Table.css';
 
@@ -35,14 +36,7 @@ class Table extends Component {
     if(desplayedItems.length > 0) {
       var items = desplayedItems.map((item) => {
         return (
-          <tr key={item.id} className={(item.type == 'доход') ? 'pb-tr-profit': 'pb-tr-expens'}>
-            <td>{item.date}</td>
-            <td className="pb-cat"><div> <i className="fa fa-tag" aria-hidden="true"></i> {item.category}</div></td>
-            <td>{(item.description == '') ? '-': item.description}</td>
-            <td className={(item.type == 'доход') ? 'pb-profit': 'pb-leave'}>{(item.type == 'доход') ? '+' + item.sum + 'руб.' : '-' + item.sum + 'руб.'}</td>
-            <td></td>
-            <td></td>
-          </tr>
+          <ItemTable item={item} />
         )
       })
       renderItems = <tbody>{items}</tbody>
