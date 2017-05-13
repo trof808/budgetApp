@@ -10,13 +10,13 @@ class Main extends Component {
     return (
       <div className="main-wrapper">
         <div className="row">
-          <div className="col-md-2">
+          <div className="col-md-3">
 
           </div>
-          <div className="col-md-8">
+          <div className="col-md-6">
             <Table />
           </div>
-          <div className="col-md-2">
+          <div className="col-md-3">
 
           </div>
         </div>

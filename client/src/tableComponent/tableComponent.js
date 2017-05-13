@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Search from '../searchComponent/searchComponent';
 import ItemTable from '../itemTableComponent/itemTableComponent';
+import AddButtons from '../addButtonsComponent/addButtonsComponent';
 
 import './Table.css';
 
@@ -36,17 +37,19 @@ class Table extends Component {
     if(desplayedItems.length > 0) {
       var items = desplayedItems.map((item) => {
         return (
-          <ItemTable item={item} />
+          <ItemTable key={item.id} item={item} />
         )
       })
       renderItems = <tbody>{items}</tbody>
     } else {
-      renderItems = <tbody><tr>Совпадений не найдено</tr></tbody>
+      renderItems = <tbody className="no-result"><tr><th>Совпадений не найдено</th></tr></tbody>
     }
     return (
       <div className="main-content">
         <div className="row">
-          <div className="col-md-4"></div>
+          <div className="col-md-4">
+            <AddButtons />
+          </div>
           <div className="col-md-4">
             <Search updateItems={this.updateTableItems} />
           </div>

@@ -35,10 +35,10 @@ router.get('/data', (req, res, next) => {
 
 });
 
-router.post('/', (req, res, next) => {
+router.post('/data', (req, res, next) => {
 
     let data = req.body;
-
+    console.log(data);
     let options = {
         currentDate: budgetApi.formatDate(new Date()),
         data: []
@@ -46,7 +46,7 @@ router.post('/', (req, res, next) => {
 
     pg.connect(config.config, (err, client, done) => {
       if(err) {
-        console.log(err);
+        console.log('Ошибка ' + err);
         next();
       } else {
         client.query('INSERT INTO data(type, date, category, description, sum) values($1, $2, $3, $4, $5)', [data.type, data.date, data.category, data.description, data.sum]);
