@@ -6,7 +6,7 @@ const pg = require('pg');
 const config = require('../config');
 
 
-router.get('/users', (req, res, next) => {
+router.get('/data', (req, res, next) => {
 
     let options = {
         currentDate: budgetApi.formatDate(new Date()),
