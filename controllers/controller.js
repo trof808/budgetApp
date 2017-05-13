@@ -15,7 +15,7 @@ router.get('/users', (req, res, next) => {
 
     let today = options.currentDate.split('-')[0] + '-' + options.currentDate.split('-')[1];
 
-    pg.connect(config.connectionString, (err, client, done) => {
+    pg.connect(config.config, (err, client, done) => {
       if(err) {
         done();
         next();
@@ -44,7 +44,7 @@ router.post('/', (req, res, next) => {
         data: []
     };
 
-    pg.connect(config.connectionString, (err, client, done) => {
+    pg.connect(config.config, (err, client, done) => {
       if(err) {
         console.log(err);
         next();
@@ -74,7 +74,7 @@ router.get('/:editId', (req, res, next) => {
 
     let editId = req.params.editId;
 
-    pg.connect(config.connectionString, (err, client, done) => {
+    pg.connect(config.config, (err, client, done) => {
       if(err) {
         done();
         next();
@@ -102,7 +102,7 @@ router.delete('/:itemId', (req, res, next) => {
         data: []
     };
 
-    pg.connect(config.connectionString, (err, client, done) => {
+    pg.connect(config.config, (err, client, done) => {
       if(err) {
         done();
         next();
@@ -126,7 +126,7 @@ router.put('/:updateId', (req, res, next) => {
     data: []
   }
   var data = req.body
-  pg.connect(config.connectionString, (err, client, done) => {
+  pg.connect(config.config, (err, client, done) => {
     if(err) {
       done();
       next();

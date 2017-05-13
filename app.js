@@ -28,17 +28,17 @@ app.use('/assets', express.static(path.join(__dirname, 'assets')));
 app.use(bodyParser.urlencoded({ extended: false }));
 
 //set up sessions
-app.use(cookieParser(config.cookieSecret));
-app.use(session({
-    resave: false,
-    saveUninitialized: false,
-    secret: config.cookieSecret,
-    store: new pgSession({
-      pg: pg,
-      conString: config.connectionString,
-      tableName: 'sessions_table'
-    })
-}));
+// app.use(cookieParser(config.cookieSecret));
+// app.use(session({
+//     resave: false,
+//     saveUninitialized: false,
+//     secret: config.cookieSecret,
+//     store: new pgSession({
+//       pg: pg,
+//       conString: config.connectionString,
+//       tableName: 'sessions_table'
+//     })
+// }));
 
 //logger
 if (app.get('env') === 'development') {
